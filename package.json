@@ -1,0 +1,27 @@
+{
+  "name": "portfolio-th",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "build": "astro build",
+    "preview": "astro preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@astrojs/react": "latest",
+    "@astrojs/tailwind": "latest",
+    "@tailwindcss/vite": "latest",
+    "astro": "latest",
+    "gsap": "latest",
+    "lenis": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwindcss": "latest"
+  },
+  "devDependencies": {
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "typescript": "latest"
+  }
+}

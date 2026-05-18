@@ -1,13 +1,22 @@
 # Portfolio-TH
 
-Personal portfolio website for TIAN-HONG.
+Interactive personal portfolio website for TIAN-HONG.
 
-## What is included
+## Stack
 
-- `index.html` - page structure and content
-- `styles.css` - responsive layout and visual design
-- `script.js` - animated portfolio visual and dynamic year
+- Astro
+- React
+- Tailwind CSS
+- GSAP
+- Lenis
+- TypeScript
 
-## Edit next
+## Commands
 
-Replace the placeholder email in `index.html` with your real contact email, then swap the project cards for your real work.
+```bash
+npm install
+npm run dev
+npm run build
+```
+
+The current contact email is still a placeholder. Replace `your.email@example.com` in `src/components/PortfolioExperience.tsx` when the real email is ready.
