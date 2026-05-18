@@ -184,13 +184,7 @@ const projects = [
       </main>
     </div>
 
-    <script>
-      import gsap from "gsap";
-      import { ScrollTrigger } from "gsap/ScrollTrigger";
-      import Lenis from "lenis";
-
-      gsap.registerPlugin(ScrollTrigger);
-
+    <script is:inline>
       let soundOn = false;
       let audioContext = null;
 
@@ -289,52 +283,43 @@ const projects = [
       });
 
       const runRevealAnimations = () => {
-        gsap.fromTo(
-          ".motion-word",
-          { yPercent: 110, opacity: 0 },
-          {
-            yPercent: 0,
-            opacity: 1,
-            duration: 0.85,
-            ease: "power4.out",
-            stagger: 0.035,
-            delay: 0.1,
-          },
-        );
-
-        gsap.utils.toArray("[data-reveal]").forEach((item) => {
-          gsap.fromTo(
-            item,
-            { y: 48, opacity: 0, scale: 0.98 },
+        document.querySelectorAll(".motion-word").forEach((word, index) => {
+          word.animate(
+            [
+              { transform: "translateY(110%)", opacity: 0 },
+              { transform: "translateY(0)", opacity: 1 },
+            ],
             {
-              y: 0,
-              opacity: 1,
-              scale: 1,
-              duration: 0.75,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: item,
-                start: "top 86%",
-                once: true,
-              },
+              duration: 850,
+              delay: 100 + index * 35,
+              easing: "cubic-bezier(0.19, 1, 0.22, 1)",
+              fill: "both",
             },
           );
         });
-      };
 
-      const lenis = new Lenis({
-        duration: 1.05,
-        smoothWheel: true,
-        wheelMultiplier: 0.85,
-      });
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.animate(
+              [
+                { transform: "translateY(48px) scale(0.98)", opacity: 0 },
+                { transform: "translateY(0) scale(1)", opacity: 1 },
+              ],
+              {
+                duration: 750,
+                easing: "cubic-bezier(0.19, 1, 0.22, 1)",
+                fill: "both",
+              },
+            );
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.12 });
 
-      const raf = (time) => {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
+        document.querySelectorAll("[data-reveal]").forEach((item) => {
+          revealObserver.observe(item);
+        });
       };
-      requestAnimationFrame(raf);
-      lenis.on("scroll", ScrollTrigger.update);
-      gsap.ticker.lagSmoothing(0);
 
       if (cursor) {
         let targetX = window.innerWidth * 0.5;
