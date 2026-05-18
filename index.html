@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="TIAN-HONG's personal portfolio website for projects, skills, and contact information."
+    />
+    <title>TIAN-HONG | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" data-header>
+      <a class="brand" href="#home" aria-label="TIAN-HONG portfolio home">
+        <span class="brand-mark">TH</span>
+        <span>TIAN-HONG</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero section-band" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow">Personal Portfolio</p>
+          <h1>TIAN-HONG</h1>
+          <p class="hero-lede">
+            I build clean digital experiences with thoughtful interfaces,
+            practical engineering, and a steady eye for detail.
+          </p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button primary" href="#projects">View Projects</a>
+            <a class="button secondary" href="#contact">Get in Touch</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Portfolio visual preview">
+          <canvas id="portfolioCanvas" width="720" height="520"></canvas>
+          <div class="visual-caption">
+            <span>Design</span>
+            <span>Code</span>
+            <span>Launch</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-band muted" id="projects">
+        <div class="section-heading">
+          <p class="eyebrow">Selected Work</p>
+          <h2>Featured Projects</h2>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card">
+            <div class="project-preview preview-one"></div>
+            <div class="project-content">
+              <p class="project-type">Web Design</p>
+              <h3>Portfolio Website</h3>
+              <p>
+                A responsive personal website for presenting projects, skills,
+                and contact channels in one polished place.
+              </p>
+              <a href="#contact" aria-label="Discuss Portfolio Website project">Discuss project</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-preview preview-two"></div>
+            <div class="project-content">
+              <p class="project-type">Interface</p>
+              <h3>Dashboard Concept</h3>
+              <p>
+                A focused dashboard layout built for quick scanning, clear
+                status signals, and repeat daily workflows.
+              </p>
+              <a href="#contact" aria-label="Discuss Dashboard Concept project">Discuss project</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-preview preview-three"></div>
+            <div class="project-content">
+              <p class="project-type">Interactive Tool</p>
+              <h3>Workflow Builder</h3>
+              <p>
+                A lightweight interaction model for turning rough requirements
+                into organized steps and visible progress.
+              </p>
+              <a href="#contact" aria-label="Discuss Workflow Builder project">Discuss project</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-band" id="skills">
+        <div class="section-heading">
+          <p class="eyebrow">Capabilities</p>
+          <h2>Skills I Bring</h2>
+        </div>
+
+        <div class="skills-layout">
+          <div>
+            <h3>Frontend Craft</h3>
+            <p>
+              Responsive layouts, accessible components, visual polish, and
+              browser-friendly interactions.
+            </p>
+          </div>
+          <div class="skill-list" aria-label="Skill list">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>Responsive UI</span>
+            <span>Git</span>
+            <span>Deployment</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-band muted about" id="about">
+        <div class="section-heading">
+          <p class="eyebrow">Profile</p>
+          <h2>About Me</h2>
+        </div>
+        <div class="about-grid">
+          <p>
+            I am building this portfolio as a home base for my work. The current
+            version is ready to publish, and each project can be replaced with
+            real screenshots, case studies, and links as my work grows.
+          </p>
+          <p>
+            My working style is calm, organized, and practical: understand the
+            goal, shape the interface around real use, then keep refining until
+            the experience feels clear.
+          </p>
+        </div>
+      </section>
+
+      <section class="section-band contact" id="contact">
+        <div class="section-heading">
+          <p class="eyebrow">Contact</p>
+          <h2>Let&apos;s Connect</h2>
+        </div>
+        <div class="contact-row">
+          <a class="contact-link" href="mailto:your.email@example.com">your.email@example.com</a>
+          <a class="contact-link" href="https://github.com/TIAN-HONG" target="_blank" rel="noreferrer">
+            github.com/TIAN-HONG
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; <span id="year"></span> TIAN-HONG. Built with HTML, CSS, and JavaScript.</p>
+      <a href="#home" aria-label="Back to top">Top</a>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
