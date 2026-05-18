@@ -1,6 +1,37 @@
 ---
 import "../styles/global.css";
-import PortfolioExperience from "../components/PortfolioExperience";
+
+const navItems = ["work", "about", "contact"];
+const projects = [
+  {
+    title: "Portfolio System",
+    year: "2026",
+    type: "Web Experience",
+    summary: "A personal site shaped around motion, clarity, and fast publishing.",
+    colors: ["#21ffc0", "#f5f1e7", "#0a0a0a"],
+  },
+  {
+    title: "Interactive Dashboard",
+    year: "2026",
+    type: "Interface Study",
+    summary: "A focused interface concept for scanning status, work, and next steps.",
+    colors: ["#ff6b4a", "#f8d24c", "#111827"],
+  },
+  {
+    title: "Workflow Builder",
+    year: "2025",
+    type: "Product Prototype",
+    summary: "A lightweight tool concept for translating fuzzy tasks into momentum.",
+    colors: ["#79a7ff", "#ffffff", "#171717"],
+  },
+  {
+    title: "Visual Lab",
+    year: "2025",
+    type: "Motion Sketches",
+    summary: "Experiments with responsive motion, cursor feedback, and spatial rhythm.",
+    colors: ["#c9ff5f", "#a78bfa", "#0f172a"],
+  },
+];
 ---
 
 <!doctype html>
@@ -21,6 +52,361 @@ import PortfolioExperience from "../components/PortfolioExperience";
     />
   </head>
   <body>
-    <PortfolioExperience client:load />
+    <div class="site-shell">
+      <canvas id="ambientCanvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+      <div class="loader" data-loader aria-hidden="false">
+        <p class="loader-kicker">Interactive portfolio</p>
+        <h1>TIAN-HONG</h1>
+        <p class="loader-text">frontend craft / motion details / clear digital work</p>
+        <button class="pill-button pill-button--light" data-enter-sound>
+          enter with sound
+        </button>
+        <button class="text-button" data-enter-silent>
+          enter without sound
+        </button>
+      </div>
+
+      <header class="floating-header">
+        <a class="logo-button" href="#top" data-sound-hover>
+          TH
+          <span>home</span>
+        </a>
+        <button class="menu-button" data-menu-button>
+          <span data-menu-label>menu</span>
+        </button>
+      </header>
+
+      <aside class="menu-panel" data-menu-panel>
+        <nav>
+          {navItems.map((item) => (
+            <a href={`#${item}`} data-menu-link data-sound-hover>
+              {item}
+            </a>
+          ))}
+        </nav>
+        <div class="menu-meta">
+          <a href="https://github.com/TIAN-HONG" target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+          <a href="mailto:your.email@example.com">Email</a>
+        </div>
+      </aside>
+
+      <button class="sound-toggle" data-sound-toggle aria-label="Toggle sound">sound off</button>
+
+      <main id="top">
+        <section class="hero-section">
+          <div class="hero-copy">
+            <p class="section-tag">portfolio / 2026</p>
+            <h2 aria-label="TIAN-HONG frontend portfolio">
+              {"TIAN-HONG frontend portfolio".split(" ").map((word) => (
+                <span class="word-mask">
+                  <span class="motion-word">{word}</span>
+                </span>
+              ))}
+            </h2>
+            <p data-reveal>
+              I design and build responsive web experiences with strong structure, expressive motion,
+              and the kind of details that make a site feel alive.
+            </p>
+          </div>
+
+          <a class="showreel-card" href="#work" data-sound-hover>
+            <span>selected work</span>
+            <strong>scroll</strong>
+          </a>
+        </section>
+
+        <section class="work-section" id="work">
+          <div class="section-heading" data-reveal>
+            <p class="section-tag">selected projects</p>
+            <h3>Hover the titles</h3>
+          </div>
+
+          <div class="project-cursor" data-project-cursor aria-hidden="true">
+            <div class="project-cursor-card" data-project-cursor-card>
+              <span data-project-cursor-label>Hover a project</span>
+            </div>
+          </div>
+
+          <div class="project-list">
+            {projects.map((project) => (
+              <a
+                class="project-row"
+                href="#contact"
+                data-reveal
+                data-project-row
+                data-title={project.title}
+                data-colors={project.colors.join(",")}
+              >
+                <span>{project.title}</span>
+                <small>{project.type}</small>
+                <em>{project.year}</em>
+                <p>{project.summary}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="about-section" id="about">
+          <p class="about-text" data-reveal>
+            This site is the first version of my personal studio space. The direction is sharp,
+            dark, kinetic, and portfolio-first: fewer generic cards, more memorable interactions.
+          </p>
+          <div class="skill-marquee" aria-label="Skills">
+            <div>
+              <span>Astro</span>
+              <span>GSAP</span>
+              <span>Lenis</span>
+              <span>Tailwind</span>
+              <span>TypeScript</span>
+              <span>Motion</span>
+            </div>
+            <div aria-hidden="true">
+              <span>Astro</span>
+              <span>GSAP</span>
+              <span>Lenis</span>
+              <span>Tailwind</span>
+              <span>TypeScript</span>
+              <span>Motion</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="contact-section" id="contact">
+          <p class="section-tag">contact</p>
+          <a href="mailto:your.email@example.com">your.email@example.com</a>
+          <a href="https://github.com/TIAN-HONG" target="_blank" rel="noreferrer">
+            github.com/TIAN-HONG
+          </a>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      import gsap from "gsap";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
+      import Lenis from "lenis";
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      let soundOn = false;
+      let audioContext = null;
+
+      const ensureContext = () => {
+        if (!audioContext) audioContext = new AudioContext();
+        return audioContext;
+      };
+
+      const playSound = (kind) => {
+        if (!soundOn) return;
+        const context = ensureContext();
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+        const now = context.currentTime;
+        const settings = {
+          hover: [420, 0.035, 0.025],
+          click: [180, 0.08, 0.045],
+          enter: [260, 0.22, 0.035],
+          switch: [620, 0.06, 0.03],
+        }[kind];
+
+        oscillator.type = kind === "enter" ? "sine" : "triangle";
+        oscillator.frequency.setValueAtTime(settings[0], now);
+        oscillator.frequency.exponentialRampToValueAtTime(settings[0] * 1.35, now + settings[1]);
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(settings[2], now + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + settings[1]);
+        oscillator.connect(gain);
+        gain.connect(context.destination);
+        oscillator.start(now);
+        oscillator.stop(now + settings[1] + 0.02);
+      };
+
+      const loader = document.querySelector("[data-loader]");
+      const soundToggle = document.querySelector("[data-sound-toggle]");
+      const menuButton = document.querySelector("[data-menu-button]");
+      const menuLabel = document.querySelector("[data-menu-label]");
+      const menuPanel = document.querySelector("[data-menu-panel]");
+      const cursor = document.querySelector("[data-project-cursor]");
+      const cursorCard = document.querySelector("[data-project-cursor-card]");
+      const cursorLabel = document.querySelector("[data-project-cursor-label]");
+
+      const setSound = (enabled) => {
+        soundOn = enabled;
+        if (enabled) ensureContext().resume();
+        if (soundToggle) soundToggle.textContent = enabled ? "sound on" : "sound off";
+      };
+
+      const enterSite = (withSound) => {
+        setSound(withSound);
+        playSound("enter");
+        loader?.classList.add("loader--hidden");
+        loader?.setAttribute("aria-hidden", "true");
+        runRevealAnimations();
+      };
+
+      document.querySelector("[data-enter-sound]")?.addEventListener("click", () => enterSite(true));
+      document.querySelector("[data-enter-silent]")?.addEventListener("click", () => enterSite(false));
+
+      soundToggle?.addEventListener("click", () => {
+        setSound(!soundOn);
+        playSound("switch");
+      });
+
+      menuButton?.addEventListener("click", () => {
+        const isOpen = menuPanel?.classList.toggle("is-open");
+        menuButton.classList.toggle("is-open", Boolean(isOpen));
+        if (menuLabel) menuLabel.textContent = isOpen ? "close" : "menu";
+        playSound(isOpen ? "click" : "switch");
+      });
+
+      document.querySelectorAll("[data-menu-link]").forEach((link) => {
+        link.addEventListener("click", () => {
+          menuPanel?.classList.remove("is-open");
+          menuButton?.classList.remove("is-open");
+          if (menuLabel) menuLabel.textContent = "menu";
+        });
+      });
+
+      document.querySelectorAll("[data-sound-hover]").forEach((item) => {
+        item.addEventListener("mouseenter", () => playSound("hover"));
+      });
+
+      document.querySelectorAll("[data-project-row]").forEach((row) => {
+        row.addEventListener("mouseenter", () => {
+          const colors = row.dataset.colors?.split(",") ?? ["#21ffc0", "#fafafa", "#0a0a0a"];
+          if (cursorLabel) cursorLabel.textContent = row.dataset.title ?? "Project";
+          if (cursorCard) {
+            cursorCard.style.background = `linear-gradient(135deg, ${colors[0]}, ${colors[1]} 52%, ${colors[2]})`;
+          }
+          cursor?.classList.add("is-visible");
+          playSound("hover");
+        });
+        row.addEventListener("mouseleave", () => cursor?.classList.remove("is-visible"));
+        row.addEventListener("click", () => playSound("click"));
+      });
+
+      const runRevealAnimations = () => {
+        gsap.fromTo(
+          ".motion-word",
+          { yPercent: 110, opacity: 0 },
+          {
+            yPercent: 0,
+            opacity: 1,
+            duration: 0.85,
+            ease: "power4.out",
+            stagger: 0.035,
+            delay: 0.1,
+          },
+        );
+
+        gsap.utils.toArray("[data-reveal]").forEach((item) => {
+          gsap.fromTo(
+            item,
+            { y: 48, opacity: 0, scale: 0.98 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.75,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: item,
+                start: "top 86%",
+                once: true,
+              },
+            },
+          );
+        });
+      };
+
+      const lenis = new Lenis({
+        duration: 1.05,
+        smoothWheel: true,
+        wheelMultiplier: 0.85,
+      });
+
+      const raf = (time) => {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      };
+      requestAnimationFrame(raf);
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.lagSmoothing(0);
+
+      if (cursor) {
+        let targetX = window.innerWidth * 0.5;
+        let targetY = window.innerHeight * 0.5;
+        let currentX = targetX;
+        let currentY = targetY;
+
+        window.addEventListener("mousemove", (event) => {
+          targetX = event.clientX;
+          targetY = event.clientY;
+        }, { passive: true });
+
+        const tick = () => {
+          currentX += (targetX - currentX) * 0.14;
+          currentY += (targetY - currentY) * 0.14;
+          cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-28%, -74%)`;
+          requestAnimationFrame(tick);
+        };
+        tick();
+      }
+
+      const canvas = document.querySelector("#ambientCanvas");
+      const ctx = canvas?.getContext("2d");
+      if (canvas && ctx) {
+        const dots = Array.from({ length: 42 }, (_, index) => ({
+          angle: index * 0.58,
+          radius: 80 + (index % 7) * 28,
+          speed: 0.002 + (index % 5) * 0.0007,
+          size: 2 + (index % 4),
+        }));
+
+        const resize = () => {
+          const ratio = window.devicePixelRatio || 1;
+          canvas.width = window.innerWidth * ratio;
+          canvas.height = window.innerHeight * ratio;
+          ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        };
+
+        const draw = (time) => {
+          const width = window.innerWidth;
+          const height = window.innerHeight;
+          ctx.clearRect(0, 0, width, height);
+          ctx.fillStyle = "rgba(10, 10, 10, 0.92)";
+          ctx.fillRect(0, 0, width, height);
+
+          const centerX = width * 0.5;
+          const centerY = height * 0.48;
+          dots.forEach((dot, index) => {
+            const angle = dot.angle + time * dot.speed;
+            const x = centerX + Math.cos(angle) * dot.radius * (1 + Math.sin(time * 0.0004) * 0.16);
+            const y = centerY + Math.sin(angle * 1.24) * dot.radius * 0.72;
+            ctx.beginPath();
+            ctx.fillStyle = index % 3 === 0 ? "#21ffc0" : index % 3 === 1 ? "#fafafa" : "#ff6b4a";
+            ctx.globalAlpha = 0.18 + (index % 5) * 0.045;
+            ctx.arc(x, y, dot.size, 0, Math.PI * 2);
+            ctx.fill();
+          });
+
+          ctx.globalAlpha = 0.22;
+          ctx.strokeStyle = "#fafafa";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.ellipse(centerX, centerY, width * 0.34, height * 0.18, Math.sin(time * 0.0002) * 0.18, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+          requestAnimationFrame(draw);
+        };
+
+        resize();
+        window.addEventListener("resize", resize);
+        requestAnimationFrame(draw);
+      }
+    </script>
   </body>
 </html>

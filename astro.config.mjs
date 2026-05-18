@@ -1,9 +1,8 @@
 import { defineConfig } from "astro/config";
-import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({
   site: "https://tian-hong.github.io",
-  base: "/Portfolio-TH",
-  integrations: [react(), tailwind()],
+  base: "/Portfolio-TH/",
+  integrations: [tailwind()],
 });

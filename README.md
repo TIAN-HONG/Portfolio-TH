@@ -5,7 +5,6 @@ Interactive personal portfolio website for TIAN-HONG.
 ## Stack
 
 - Astro
-- React
 - Tailwind CSS
 - GSAP
 - Lenis
@@ -19,4 +18,4 @@ npm run dev
 npm run build
 ```
 
-The current contact email is still a placeholder. Replace `your.email@example.com` in `src/components/PortfolioExperience.tsx` when the real email is ready.
+The current contact email is still a placeholder. Replace `your.email@example.com` in `src/pages/index.astro` when the real email is ready.

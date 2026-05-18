@@ -9,19 +9,13 @@
     "preview": "astro preview --host 127.0.0.1"
   },
   "dependencies": {
-    "@astrojs/react": "latest",
     "@astrojs/tailwind": "latest",
-    "@tailwindcss/vite": "latest",
     "astro": "latest",
     "gsap": "latest",
     "lenis": "latest",
-    "react": "latest",
-    "react-dom": "latest",
     "tailwindcss": "latest"
   },
   "devDependencies": {
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
     "typescript": "latest"
   }
 }
